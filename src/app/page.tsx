@@ -56,6 +56,14 @@ function Navigation() {
               alt="Africa Structures"
               className="h-10 w-auto object-contain"
             />
+            <div className="flex flex-col">
+              <span className="font-display text-base font-bold tracking-tight text-forest leading-none">
+                AFRICA
+              </span>
+              <span className="font-body text-[9px] uppercase tracking-[0.25em] text-muted-foreground leading-none mt-0.5">
+                Structures
+              </span>
+            </div>
           </a>
 
           {/* Desktop nav */}
@@ -159,9 +167,21 @@ function HeroSection() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+        >
+          <img
+            src="/logo-africa-structures.png"
+            alt="Africa Structures"
+            className="h-20 sm:h-24 md:h-28 w-auto object-contain mx-auto mb-8"
+          />
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
           <Badge variant="outline" className="mb-8 text-xs tracking-widest uppercase border-forest/20 text-forest/70 px-4 py-1.5">
             Think &amp; Do Tank africain
@@ -819,12 +839,17 @@ function Footer() {
         {/* Middle: Links grid */}
         <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <div className="mb-5">
+            <div className="flex items-center gap-2.5 mb-5">
               <img
                 src="/logo-africa-structures.png"
                 alt="Africa Structures"
                 className="h-8 w-auto object-contain brightness-0 invert opacity-90"
               />
+              <div className="flex flex-col">
+                <span className="font-display text-sm font-bold tracking-tight leading-none">
+                  AFRICA STRUCTURES
+                </span>
+              </div>
             </div>
             <p className="text-white/50 text-sm leading-relaxed">
               Penser, structurer et agir pour des sociétés africaines justes et durables.
