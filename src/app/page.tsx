@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import {
-  Menu, X, ArrowRight, ArrowDownRight,
+  Menu, X, ArrowRight, ArrowDownRight, Camera,
   Brain, Heart, GraduationCap,
   MapPin, Users, Mail, Globe,
   BookOpen, ChevronRight,
@@ -25,6 +25,7 @@ const navLinks = [
   { label: 'Piliers', href: '#piliers' },
   { label: 'Projets', href: '#projets' },
   { label: 'Futur', href: '#futur' },
+  { label: 'Album', href: '#album' },
   { label: 'Réseau', href: '#reseau' },
   { label: 'Contact', href: '#contact' },
 ]
@@ -275,9 +276,26 @@ function ProjetSection() {
           </div>
         </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-          <Reveal delay={0.1}>
-            <div className="space-y-6">
+        <Reveal>
+            <div className="relative rounded-sm overflow-hidden h-64 md:h-80 mb-12">
+              <img
+                src="/photos/community-dialogue.png"
+                alt="Dialogue communautaire au Sénégal"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-forest/70 to-forest/20" />
+              <div className="absolute inset-0 flex items-center p-8 md:p-12">
+                <p className="text-white/90 text-lg md:text-xl font-display font-semibold max-w-md leading-relaxed">
+                  &laquo;&nbsp;La transformation ne vient pas d'en haut. Elle naît dans
+                  le dialogue, la structure et l'action collective.&nbsp;&raquo;
+                </p>
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+            <Reveal delay={0.1}>
+              <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <div className="mt-1 w-10 h-10 rounded-sm bg-forest/5 flex items-center justify-center shrink-0">
                   <Target className="w-5 h-5 text-forest" />
@@ -447,6 +465,7 @@ const projets = [
   {
     icon: Stethoscope,
     title: "Mutuelle de santé communautaire",
+    photo: '/photos/health-community.png',
     description:
       "Dispositif de solidarité santé à l'échelle territoriale pilote. Conception, diagnostic terrain et mise en oeuvre d'un modèle mutualiste adapté aux réalités locales.",
     statut: 'En cours',
@@ -455,6 +474,7 @@ const projets = [
   {
     icon: Building2,
     title: "Développement communal intégré",
+    photo: '/photos/entrepreneuriat-local.png',
     description:
       "Projet de transformation économique locale articulé autour de la biscuiterie communautaire et de l'entrepreneuriat social. Un modèle reproductible pour le développement territorial.",
     statut: 'En cours',
@@ -463,6 +483,7 @@ const projets = [
   {
     icon: Palette,
     title: "Les Royaumes de la Mémoire",
+    photo: '/photos/cultural-performance.png',
     description:
       "Projet culturel majeur rendant hommage aux Rois et Reines africains. À travers la musique, la fresque et le film, revitaliser les valeurs fondatrices et transmettre un récit de fierté aux nouvelles générations.",
     statut: 'Phare',
@@ -471,6 +492,7 @@ const projets = [
   {
     icon: Globe,
     title: "L'Afrique au Coeur",
+    photo: '/photos/dakar-cityscape.png',
     description:
       "Plateforme de mise en valeur du continent africain dans toute sa diversité, sa créativité et son potentiel. Un espace narratif qui raconte l'Afrique par ceux qui la vivent et la construisent.",
     statut: 'En cours',
@@ -479,6 +501,7 @@ const projets = [
   {
     icon: Users,
     title: "Programmes de formation citoyenne",
+    photo: '/photos/training-citoyenne.png',
     description:
       "Formation de leaders communautaires, ateliers de nouvelle conscience citoyenne et dialogues communautaires. Renforcer les capacités d'action locale par la connaissance et la méthode.",
     statut: 'En cours',
@@ -487,6 +510,7 @@ const projets = [
   {
     icon: Landmark,
     title: "Nouvelle Conscience Citoyenne",
+    photo: '/photos/community-dialogue.png',
     description:
       "Programme structuré de sensibilisation et d'engagement civique. Repenser la relation entre citoyen, État et territoire pour construire une culture de responsabilité partagée.",
     statut: 'Prochainement',
@@ -517,24 +541,32 @@ function ProjetsSection() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projets.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.1}>
-              <Card className="h-full border-border/50 hover:border-gold/30 transition-all duration-300 hover:shadow-md group bg-white">
-                <CardContent className="pt-7 pb-7 px-7 flex flex-col h-full">
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-11 h-11 rounded-sm bg-forest/5 flex items-center justify-center">
-                      <p.icon className="w-5 h-5 text-forest" />
-                    </div>
+              <Card className="h-full border-border/50 hover:border-gold/30 transition-all duration-300 hover:shadow-md group bg-white overflow-hidden">
+                <div className="relative h-44 overflow-hidden">
+                  <img
+                    src={p.photo}
+                    alt={p.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
                     <Badge
                       variant={p.statutVariant}
                       className={
                         p.statutVariant === 'default'
                           ? 'bg-forest text-white text-[10px] px-2.5 py-0.5'
                           : p.statutVariant === 'secondary'
-                          ? 'bg-gold/10 text-gold text-[10px] border-gold/20 px-2.5 py-0.5'
-                          : 'text-[10px] px-2.5 py-0.5'
+                          ? 'bg-gold text-white text-[10px] px-2.5 py-0.5'
+                          : 'bg-white/90 text-foreground text-[10px] px-2.5 py-0.5'
                       }
                     >
                       {p.statut}
                     </Badge>
+                  </div>
+                </div>
+                <CardContent className="pt-6 pb-6 px-7 flex flex-col h-full">
+                  <div className="w-9 h-9 rounded-sm bg-forest/5 flex items-center justify-center mb-4">
+                    <p.icon className="w-4 h-4 text-forest" />
                   </div>
                   <h3 className="font-display text-lg font-semibold text-forest mb-3 leading-snug">
                     {p.title}
@@ -609,7 +641,16 @@ function FuturSection() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-sm p-8 md:p-10">
+            <div className="space-y-6">
+              <div className="relative rounded-sm overflow-hidden h-56">
+                <img
+                  src="/photos/tech-innovation.png"
+                  alt="Innovation technologique en Afrique"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest/60 to-transparent" />
+              </div>
+              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-sm p-8 md:p-10">
               <h3 className="font-display text-xl font-bold mb-6 text-gold-light">
                 Notre vision technologique
               </h3>
@@ -635,6 +676,7 @@ function FuturSection() {
                   </div>
                 ))}
               </div>
+            </div>
             </div>
           </Reveal>
         </div>
@@ -915,6 +957,196 @@ function Footer() {
   )
 }
 
+/* ─────────────── Album & Réalisations Section ─────────────── */
+
+const albumPhotos = [
+  { src: '/photos/dakar-cityscape.png', title: 'Dakar — Ville en mouvement', category: 'Territoire' },
+  { src: '/photos/community-dialogue.png', title: 'Dialogues communautaires', category: 'Citoyenneté' },
+  { src: '/photos/health-community.png', title: 'Mutuelle de santé communautaire', category: 'Santé' },
+  { src: '/photos/cultural-performance.png', title: 'Les Royaumes de la Mémoire', category: 'Culture' },
+  { src: '/photos/training-citoyenne.png', title: 'Formation des leaders', category: 'Formation' },
+  { src: '/photos/entrepreneuriat-local.png', title: 'Entrepreneuriat social', category: 'Économie' },
+  { src: '/photos/tech-innovation.png', title: 'Innovation & IA responsable', category: 'Technologie' },
+  { src: '/photos/paysage-senegal.png', title: 'Terre de Sénégal', category: 'Paysage' },
+  { src: '/photos/cultural-elders.png', title: 'Gardiens de la mémoire', category: 'Culture' },
+]
+
+function Lightbox({
+  photo,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  photo: (typeof albumPhotos)[0]
+  onClose: () => void
+  onPrev: () => void
+  onNext: () => void
+}) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onPrev()
+      if (e.key === 'ArrowRight') onNext()
+    }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleKey)
+    }
+  }, [onClose, onPrev, onNext])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 md:p-8"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+      >
+        <X className="w-5 h-5" />
+      </button>
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev() }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+      >
+        <ChevronRight className="w-5 h-5 rotate-180" />
+      </button>
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext() }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors z-10"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+        className="max-w-5xl w-full"
+      >
+        <img
+          src={photo.src}
+          alt={photo.title}
+          className="w-full max-h-[75vh] object-contain rounded-sm"
+        />
+        <div className="mt-4 text-center">
+          <h3 className="text-white font-display text-xl font-semibold">{photo.title}</h3>
+          <p className="text-white/50 text-sm mt-1">{photo.category}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+function AlbumSection() {
+  const [activePhoto, setActivePhoto] = useState<number | null>(null)
+  const [filter, setFilter] = useState('Tous')
+
+  const categories = ['Tous', ...Array.from(new Set(albumPhotos.map((p) => p.category)))]
+  const filtered = filter === 'Tous' ? albumPhotos : albumPhotos.filter((p) => p.category === filter)
+
+  return (
+    <section id="album" className="py-24 md:py-32 bg-muted/30">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <Reveal>
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <Badge variant="secondary" className="mb-6 bg-gold/10 text-gold border-0 text-xs tracking-widest uppercase px-4 py-1.5">
+              Album
+            </Badge>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-forest mb-6 leading-tight">
+              Réalisations &amp; Regards
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Un aperçu visuel de nos actions sur le terrain, de nos partenaires et de
+              l'Afrique que nous construisons. Cette galerie s'enrichira au fil de nos réalisations.
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Category filters */}
+        <Reveal delay={0.1}>
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-4 py-2 text-xs font-medium rounded-full transition-all ${
+                  filter === cat
+                    ? 'bg-forest text-white'
+                    : 'bg-white text-muted-foreground hover:text-forest border border-border/50 hover:border-forest/20'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Photo grid — masonry-like */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-5">
+          {filtered.map((photo, i) => (
+            <Reveal key={photo.title} delay={i * 0.05}>
+              <button
+                onClick={() => setActivePhoto(i)}
+                className={`relative w-full overflow-hidden rounded-sm group cursor-pointer ${
+                  i % 5 === 0 ? 'md:row-span-2' : ''
+                }`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.title}
+                  className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${
+                    i % 5 === 0 ? 'h-64 md:h-full min-h-[320px]' : 'h-48 md:h-56'
+                  }`}
+                />
+                <div className="absolute inset-0 bg-forest/0 group-hover:bg-forest/40 transition-colors duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-white text-sm font-display font-semibold">{photo.title}</p>
+                  <p className="text-white/70 text-xs mt-0.5">{photo.category}</p>
+                </div>
+              </button>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Placeholder for future photos */}
+        <Reveal delay={0.3}>
+          <div className="mt-12 border-2 border-dashed border-border rounded-sm p-8 md:p-12 text-center">
+            <div className="w-12 h-12 rounded-full bg-forest/5 flex items-center justify-center mx-auto mb-4">
+              <Camera className="w-6 h-6 text-forest/40" />
+            </div>
+            <h3 className="font-display text-lg font-semibold text-forest/60 mb-2">
+              Prochaines réalisations
+            </h3>
+            <p className="text-muted-foreground text-sm max-w-md mx-auto">
+              Cette galerie sera enrichie au fil de nos projets et événements sur le terrain.
+              Revenez régulièrement pour découvrir nos nouvelles photographies.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {activePhoto !== null && (
+          <Lightbox
+            photo={filtered[activePhoto]}
+            onClose={() => setActivePhoto(null)}
+            onPrev={() => setActivePhoto((activePhoto - 1 + filtered.length) % filtered.length)}
+            onNext={() => setActivePhoto((activePhoto + 1) % filtered.length)}
+          />
+        )}
+      </AnimatePresence>
+    </section>
+  )
+}
+
 /* ─────────────── Main Page ─────────────── */
 
 export default function Home() {
@@ -926,6 +1158,7 @@ export default function Home() {
       <PiliersSection />
       <ProjetsSection />
       <FuturSection />
+      <AlbumSection />
       <ReseauSection />
       <ContactSection />
       <Footer />
