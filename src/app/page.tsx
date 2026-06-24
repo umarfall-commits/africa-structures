@@ -14,7 +14,7 @@ import {
   BookOpen, ChevronRight,
   Shield, Target, Sparkles, Send,
   Landmark, Building2, Palette, Stethoscope,
-  CircleDot, Layers
+  CircleDot
 } from 'lucide-react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 
@@ -51,17 +51,11 @@ function Navigation() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 bg-forest rounded-sm flex items-center justify-center">
-              <Layers className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display text-lg font-bold tracking-tight text-forest leading-none">
-                AFRICA
-              </span>
-              <span className="font-body text-[10px] uppercase tracking-[0.25em] text-muted-foreground leading-none mt-0.5">
-                Structures
-              </span>
-            </div>
+            <img
+              src="/logo-africa-structures.png"
+              alt="Africa Structures"
+              className="h-10 w-auto object-contain"
+            />
           </a>
 
           {/* Desktop nav */}
@@ -825,13 +819,12 @@ function Footer() {
         {/* Middle: Links grid */}
         <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-7 h-7 bg-white/10 rounded-sm flex items-center justify-center">
-                <Layers className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-display text-sm font-bold tracking-tight">
-                AFRICA STRUCTURES
-              </span>
+            <div className="mb-5">
+              <img
+                src="/logo-africa-structures.png"
+                alt="Africa Structures"
+                className="h-8 w-auto object-contain brightness-0 invert opacity-90"
+              />
             </div>
             <p className="text-white/50 text-sm leading-relaxed">
               Penser, structurer et agir pour des sociétés africaines justes et durables.
