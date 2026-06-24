@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-forest: var(--forest);
+  --color-forest-light: var(--forest-light);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-sand: var(--sand);
+  --color-sand-deep: var(--sand-deep);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: #FAF8F5;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #1B4332;
+  --primary-foreground: #FFFFFF;
+  --secondary: #2D6A4F;
+  --secondary-foreground: #FFFFFF;
+  --muted: #F0EDE8;
+  --muted-foreground: #6B6459;
+  --accent: #E8E2D9;
+  --accent-foreground: #1A1A1A;
+  --destructive: #B91C1C;
+  --border: #DDD7CE;
+  --input: #DDD7CE;
+  --ring: #1B4332;
+  --forest: #1B4332;
+  --forest-light: #2D6A4F;
+  --gold: #B8860B;
+  --gold-light: #D4A843;
+  --sand: #FAF8F5;
+  --sand-deep: #F0EDE8;
+  --chart-1: #1B4332;
+  --chart-2: #2D6A4F;
+  --chart-3: #B8860B;
+  --chart-4: #D4A843;
+  --chart-5: #40916C;
+  --sidebar: #F0EDE8;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #1B4332;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E8E2D9;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border: #DDD7CE;
+  --sidebar-ring: #1B4332;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background-color: #1B4332;
+    color: #FFFFFF;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .font-display {
+    font-family: var(--font-playfair), Georgia, 'Times New Roman', serif;
+  }
+  .font-body {
+    font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  }
+  .text-forest {
+    color: #1B4332;
+  }
+  .bg-forest {
+    background-color: #1B4332;
+  }
+  .text-gold {
+    color: #B8860B;
+  }
+  .bg-gold {
+    background-color: #B8860B;
+  }
+  .border-gold {
+    border-color: #B8860B;
+  }
+}
+
+/* Subtle African geometric pattern for hero */
+.african-pattern {
+  background-image: 
+    linear-gradient(30deg, rgba(27, 67, 50, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(27, 67, 50, 0.03) 87.5%),
+    linear-gradient(150deg, rgba(27, 67, 50, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(27, 67, 50, 0.03) 87.5%),
+    linear-gradient(30deg, rgba(27, 67, 50, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(27, 67, 50, 0.03) 87.5%),
+    linear-gradient(150deg, rgba(27, 67, 50, 0.03) 12%, transparent 12.5%, transparent 87%, rgba(27, 67, 50, 0.03) 87.5%),
+    linear-gradient(60deg, rgba(184, 134, 11, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(184, 134, 11, 0.04) 75%),
+    linear-gradient(60deg, rgba(184, 134, 11, 0.04) 25%, transparent 25.5%, transparent 75%, rgba(184, 134, 11, 0.04) 75%);
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+/* Gold accent line */
+.gold-line {
+  height: 3px;
+  background: linear-gradient(90deg, #B8860B, #D4A843, #B8860B);
+}
+
+/* Section reveal animation base */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
