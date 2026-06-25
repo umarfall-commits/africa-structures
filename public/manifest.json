@@ -1,0 +1,21 @@
+{
+  "name": "Africa Structures",
+  "short_name": "Africa Str.",
+  "description": "Think & Do Tank africain — Penser, structurer et agir pour des sociétés africaines justes et durables.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#1B4332",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

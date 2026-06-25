@@ -8,6 +8,9 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger,
+} from '@/components/ui/dialog'
+import {
   Menu, X, ArrowRight, ArrowDownRight, Camera,
   Brain, Heart, GraduationCap,
   MapPin, Users, Mail, Globe,
@@ -547,6 +550,7 @@ function ProjetsSection() {
                     src={p.photo}
                     alt={p.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
@@ -747,6 +751,41 @@ function ReseauSection() {
 /* ─────────────── Contact Section ─────────────── */
 
 function ContactSection() {
+  const [formState, setFormState] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setFormState('sending')
+    setErrorMsg('')
+
+    const form = e.currentTarget
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      subject: (form.elements.namedItem('subject') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      const json = await res.json()
+      if (res.ok) {
+        setFormState('success')
+        form.reset()
+      } else {
+        setFormState('error')
+        setErrorMsg(json.error || 'Erreur.')
+      }
+    } catch {
+      setFormState('error')
+      setErrorMsg('Erreur réseau. Vérifiez votre connexion.')
+    }
+  }
   return (
     <section id="contact" className="py-24 md:py-32 bg-muted/30">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -810,20 +849,22 @@ function ContactSection() {
                 <h3 className="font-display text-xl font-semibold text-forest mb-6">
                   Envoyez-nous un message
                 </h3>
-                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-5" onSubmit={handleSubmit}>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
                         Nom complet
                       </label>
-                      <Input placeholder="Votre nom" className="h-11 bg-muted/30 border-border/50" />
+                      <Input name="name" required placeholder="Votre nom" className="h-11 bg-muted/30 border-border/50" />
                     </div>
                     <div>
                       <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
                         Courriel
                       </label>
                       <Input
+                        name="email"
                         type="email"
+                        required
                         placeholder="votre@email.com"
                         className="h-11 bg-muted/30 border-border/50"
                       />
@@ -833,25 +874,43 @@ function ContactSection() {
                     <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
                       Sujet
                     </label>
-                    <Input placeholder="L'objet de votre message" className="h-11 bg-muted/30 border-border/50" />
+                    <Input name="subject" placeholder="L'objet de votre message" className="h-11 bg-muted/30 border-border/50" />
                   </div>
                   <div>
                     <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
                       Message
                     </label>
                     <Textarea
+                      name="message"
+                      required
                       placeholder="Votre message..."
                       rows={5}
                       className="bg-muted/30 border-border/50 resize-none"
                     />
                   </div>
+
+                  {formState === 'success' && (
+                    <div className="bg-forest/5 border border-forest/20 rounded-sm p-4 text-sm text-forest">
+                      Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.
+                    </div>
+                  )}
+                  {formState === 'error' && (
+                    <div className="bg-destructive/5 border border-destructive/20 rounded-sm p-4 text-sm text-destructive">
+                      {errorMsg}
+                    </div>
+                  )}
+
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-forest hover:bg-forest-light text-white h-11"
+                    disabled={formState === 'sending'}
+                    className="w-full bg-forest hover:bg-forest-light text-white h-11 disabled:opacity-60"
                   >
-                    <Send className="w-4 h-4 mr-2" />
-                    Envoyer le message
+                    {formState === 'sending' ? (
+                      <>Envoi en cours...</>
+                    ) : (
+                      <><Send className="w-4 h-4 mr-2" />Envoyer le message</>
+                    )}
                   </Button>
                 </form>
               </CardContent>
@@ -943,14 +1002,82 @@ function Footer() {
           </div>
         </div>
 
-        {/* Bottom: Copyright */}
+        {/* Bottom: Copyright + Legal */}
         <div className="py-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white/30 text-xs">
             &copy; {new Date().getFullYear()} Africa Structures. Tous droits réservés.
           </p>
-          <p className="text-white/30 text-xs">
-            Think &amp; Do Tank africain — Indépendant et non partisan
-          </p>
+          <div className="flex items-center gap-4 text-white/30 text-xs">
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="hover:text-white/60 transition-colors">Mentions légales</button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="font-display text-xl text-forest">Mentions légales</DialogTitle>
+                  <DialogDescription>Informations légales du site Africa Structures.</DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Éditeur du site</h4>
+                    <p>Africa Structures — Think &amp; Do Tank africain<br />Siège social : Dakar, Sénégal<br />Email : contact@africastructures.org</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Directeur de la publication</h4>
+                    <p>Le fondateur et directeur d'Africa Structures.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Hébergement</h4>
+                    <p>Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Propriété intellectuelle</h4>
+                    <p>L'ensemble du contenu de ce site (textes, images, logos, marques) est la propriété exclusive d'Africa Structures ou de ses partenaires. Toute reproduction sans autorisation écrite préalable est interdite.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Responsabilité</h4>
+                    <p>Les informations publiées sur ce site sont fournies à titre indicatif. Africa Structures ne saurait être tenu responsable des usages qui en sont faits.</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="hover:text-white/60 transition-colors">Politique de confidentialité</button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="font-display text-xl text-forest">Politique de confidentialité</DialogTitle>
+                  <DialogDescription>Comment nous protégeons vos données personnelles.</DialogDescription>
+                </DialogHeader>
+                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Collecte des données</h4>
+                    <p>Le formulaire de contact collecte uniquement les données que vous fournissez volontairement : nom, email, sujet et message. Aucune autre donnée personnelle n'est collectée automatiquement.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Utilisation des données</h4>
+                    <p>Vos données sont utilisées exclusivement pour répondre à votre demande de contact. Elles ne sont ni vendues, ni cédées, ni partagées avec des tiers.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Durée de conservation</h4>
+                    <p>Les données transmises via le formulaire de contact sont conservées pendant une durée maximale de 12 mois après le dernier échange, puis supprimées.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Vos droits</h4>
+                    <p>Conformément à la loi n°2008-12 du 25 janvier 2008 relative à la protection des données personnelles au Sénégal, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits : contact@africastructures.org</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-1">Cookies</h4>
+                    <p>Ce site n'utilise pas de cookies de suivi publicitaire. Seuls les cookies techniques strictement nécessaires au fonctionnement du site peuvent être déposés.</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <span>Think &amp; Do Tank africain — Indépendant et non partisan</span>
+          </div>
         </div>
       </div>
     </footer>
@@ -1104,6 +1231,7 @@ function AlbumSection() {
                   className={`w-full object-cover group-hover:scale-105 transition-transform duration-700 ${
                     i % 5 === 0 ? 'h-64 md:h-full min-h-[320px]' : 'h-48 md:h-56'
                   }`}
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-forest/0 group-hover:bg-forest/40 transition-colors duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -1147,6 +1275,35 @@ function AlbumSection() {
   )
 }
 
+/* ─────────────── Back to Top Button ─────────────── */
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 600)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-forest text-white shadow-lg hover:bg-forest-light transition-colors flex items-center justify-center"
+          aria-label="Retour en haut"
+        >
+          <ChevronRight className="w-5 h-5 rotate-[-90deg]" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  )
+}
+
 /* ─────────────── Main Page ─────────────── */
 
 export default function Home() {
@@ -1162,6 +1319,7 @@ export default function Home() {
       <ReseauSection />
       <ContactSection />
       <Footer />
+      <BackToTop />
     </main>
   )
 }
