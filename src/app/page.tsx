@@ -7,9 +7,7 @@ import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger,
-} from '@/components/ui/dialog'
+import Link from 'next/link'
 import {
   Menu, X, ArrowRight, ArrowDownRight, Camera,
   Brain, Heart, GraduationCap,
@@ -1008,74 +1006,8 @@ function Footer() {
             &copy; {new Date().getFullYear()} Africa Structures. Tous droits réservés.
           </p>
           <div className="flex items-center gap-4 text-white/30 text-xs">
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="hover:text-white/60 transition-colors">Mentions légales</button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="font-display text-xl text-forest">Mentions légales</DialogTitle>
-                  <DialogDescription>Informations légales du site Africa Structures.</DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Éditeur du site</h4>
-                    <p>Africa Structures — Think &amp; Do Tank africain<br />Siège social : Dakar, Sénégal<br />Email : contact@africastructures.org</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Directeur de la publication</h4>
-                    <p>Le fondateur et directeur d'Africa Structures.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Hébergement</h4>
-                    <p>Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Propriété intellectuelle</h4>
-                    <p>L'ensemble du contenu de ce site (textes, images, logos, marques) est la propriété exclusive d'Africa Structures ou de ses partenaires. Toute reproduction sans autorisation écrite préalable est interdite.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Responsabilité</h4>
-                    <p>Les informations publiées sur ce site sont fournies à titre indicatif. Africa Structures ne saurait être tenu responsable des usages qui en sont faits.</p>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="hover:text-white/60 transition-colors">Politique de confidentialité</button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="font-display text-xl text-forest">Politique de confidentialité</DialogTitle>
-                  <DialogDescription>Comment nous protégeons vos données personnelles.</DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Collecte des données</h4>
-                    <p>Le formulaire de contact collecte uniquement les données que vous fournissez volontairement : nom, email, sujet et message. Aucune autre donnée personnelle n'est collectée automatiquement.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Utilisation des données</h4>
-                    <p>Vos données sont utilisées exclusivement pour répondre à votre demande de contact. Elles ne sont ni vendues, ni cédées, ni partagées avec des tiers.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Durée de conservation</h4>
-                    <p>Les données transmises via le formulaire de contact sont conservées pendant une durée maximale de 12 mois après le dernier échange, puis supprimées.</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Vos droits</h4>
-                    <p>Conformément à la loi n°2008-12 du 25 janvier 2008 relative à la protection des données personnelles au Sénégal, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits : contact@africastructures.org</p>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-1">Cookies</h4>
-                    <p>Ce site n'utilise pas de cookies de suivi publicitaire. Seuls les cookies techniques strictement nécessaires au fonctionnement du site peuvent être déposés.</p>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-
+            <Link href="/mentions-legales" className="hover:text-white/60 transition-colors">Mentions légales</Link>
+            <Link href="/confidentialite" className="hover:text-white/60 transition-colors">Politique de confidentialité</Link>
             <span>Think &amp; Do Tank africain — Indépendant et non partisan</span>
           </div>
         </div>

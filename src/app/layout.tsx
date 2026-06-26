@@ -84,6 +84,18 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Africa Structures',
+  alternateName: 'Africa Structures — Think & Do Tank africain',
+  url: 'https://africastructures.org',
+  logo: 'https://africastructures.org/logo-africa-structures.png',
+  description: "Africa Structures est un espace indépendant de réflexion, d'expérimentation et de transmission, dédié à la transformation citoyenne, institutionnelle et culturelle des sociétés africaines.",
+  address: { '@type': 'PostalAddress', addressLocality: 'Dakar', addressCountry: 'SN' },
+  email: 'contact@africastructures.org',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -91,6 +103,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </head>
       <body
         className={`${inter.variable} ${playfair.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
